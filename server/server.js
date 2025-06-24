@@ -3,7 +3,9 @@ const app = express();
 const PORT = process.env.PORT || 1111;
 const cors = require("cors")
 const http = require("http")
-const { Server } = require("socket.io")
+const { v4: uuidv4 } = require('uuid');
+const { Server } = require("socket.io");
+const { isKeyObject } = require('util/types');
 
 //Middlewares
 app.use(cors())
@@ -17,13 +19,26 @@ const socket = new Server(server, {
     }
 })
 
-//Socket handling
+//******Socket handling*******
 socket.on("connection", (client) => {
     console.log(`new connection ${client.id}`)
+
+    //when user want to publish statement
+    client.on("create", ({ title, options }) => {
+        const uniqueId = uuidv4();
+        client.join(uniqueId)//creating or joining the unique Room
+
+    //Boardcasting the unique id
+    socket.emit("roomId",uniqueId)
+
+        console.log(uniqueId)
+        console.log("Options", options)
+    })
 
 }
 )
 
+//***********Express Routes
 app.get('/', (req, res) => {
     res.send('Hello World');
 });

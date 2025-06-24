@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+@layer components{
+    .input{
+        @apply border-[1px] pl-2 border-gray-700 w-[90%] h-[50px] rounded-xs;
+    }
+}
