@@ -16,24 +16,32 @@ const App = () => {
     defaultValues: {
       title: "who is GOAT?",
       option1: "Ronaldo",
-      option2: "Pessi"
+      option2: "Pessi",
+      duration:1
     }
   })
 
   //Handling the Socket Connection
   useEffect(() => {
+
+    socket.on("connect", () => {
+      console.log("Connected to the socket server")
+    })
+
     socket.on("roomId", (roomId) => {
       if (roomId) {
-   navigate("/room")
+        navigate(`/room/${roomId}`)
       }
     })
+
+
   }, [])
 
   //Handing the Form submission
   const handlePublish = (data) => {
     console.log(data)
-    const { title } = data
-    socket.emit("create", { title, options: [data.option1, data.option2] })
+    const { title,duration } = data
+    socket.emit("create", { title, options: [data.option1, data.option2] ,duration })
   }
 
   return (
@@ -70,6 +78,16 @@ const App = () => {
             />
             {
               errors.option2 && <p>{errors.option2.message}</p>
+            }
+
+            <input type="number" name="duration" placeholder='for how much hours' className='input'
+              {...register("duration", {
+                required: "duration is required"
+              })}
+
+            />
+            {
+              errors.duratio  && <p>{errors.duration.message}</p>
             }
 
             <button
