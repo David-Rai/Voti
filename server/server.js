@@ -20,12 +20,14 @@ const socket = new Server(server, {
 //Socket handling
 socket.on("connection", (client) => {
     console.log(`new connection ${client.id}`)
+
 }
 )
 
 app.get('/', (req, res) => {
     res.send('Hello World');
 });
+
 
 server.listen(PORT, () => {
     console.log(`Server running on port PORT`);

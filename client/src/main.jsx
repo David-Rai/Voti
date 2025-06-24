@@ -1,10 +1,11 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import App from './App.jsx'
+import Home from './pages/Home.jsx'
+import { SocketProvider } from './context/Socket.jsx'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
+    <SocketProvider>
+    <Home />
+    </SocketProvider>
 )
