@@ -5,7 +5,6 @@ const cors = require("cors")
 const http = require("http")
 const { v4: uuidv4 } = require('uuid');
 const { Server } = require("socket.io");
-const { isKeyObject } = require('util/types');
 
 //Middlewares
 app.use(cors())
@@ -37,12 +36,14 @@ socket.on("connection", (client) => {
         //Deleting the room
         setTimeout(()=>{
          socket.to(uniqueId).emit("timer-ended")
-        },parseInt(duration) * 2000 )
+          //Deleting logic for socket room
+
+
+
+        },parseInt(duration) * 3000 )
 
         //Boardcasting the unique id
         socket.emit("roomId", uniqueId)
-
-        console.log("Options", options)
     })
 
 }

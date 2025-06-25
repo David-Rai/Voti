@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useContext } from 'react'
+import { useNavigate } from 'react-router';
 import { useParams } from 'react-router'
 import { ToastContainer, toast } from 'react-toastify';
 import { SocketContext } from '../context/Socket'
@@ -7,8 +8,15 @@ import { SocketContext } from '../context/Socket'
 const Publish = () => {
     const param = useParams()
     const socket = useContext(SocketContext)
+    const navigate = useNavigate()
 
     useEffect(() => {
+
+        //Joining the room
+        const roomId=param.roomId
+       console.log(roomId)
+
+        //Handling when the sessions ends
         const handleTimerEnd = () => {
             toast.error("voting ended");
             console.log("timer ended");
@@ -32,6 +40,7 @@ const Publish = () => {
         <>
             <main className='h-screen w-full bg-gray-100 flex items-center justify-center flex-col gap-5'>
 
+                <button onClick={() => navigate("/")} className='absolute text-white h-[50px] w-[120px] top-6 left-6  bg-green-600 hover:bg-green-700 rounded-xl transition'>Go back</button>
                 {/* <div>
                     <p>
                         {
@@ -65,57 +74,3 @@ const Publish = () => {
 
 export default Publish
 
-
-import { useState } from 'react'
-
-function VotingBox() {
-    const [votes, setVotes] = useState({ optionA: 0, optionB: 0 });
-
-    const totalVotes = votes.optionA + votes.optionB;
-    const percentageA = totalVotes === 0 ? 0 : (votes.optionA / totalVotes) * 100;
-    const percentageB = totalVotes === 0 ? 0 : (votes.optionB / totalVotes) * 100;
-
-    const vote = (option) => {
-        setVotes(prev => ({
-            ...prev,
-            [option]: prev[option] + 1
-        }));
-    };
-
-    return (
-        <div className="max-w-md mx-auto p-6 bg-gray-900 rounded-2xl text-white shadow-xl">
-            <h2 className="text-2xl font-bold mb-6 text-center">Which do you prefer?</h2>
-
-            <div className="flex justify-between gap-4 mb-6">
-                <button
-                    className="flex-1 py-3 bg-blue-600 hover:bg-blue-700 rounded-xl transition"
-                    onClick={() => vote('optionA')}
-                >
-                    Option A
-                </button>
-                <button
-                    className="flex-1 py-3 bg-green-600 hover:bg-green-700 rounded-xl transition"
-                    onClick={() => vote('optionB')}
-                >
-                    Option B
-                </button>
-            </div>
-
-            <div className="w-full h-6 bg-gray-700 rounded-full overflow-hidden">
-                <div
-                    className="h-full bg-blue-600"
-                    style={{ width: `${percentageA}%` }}
-                ></div>
-                <div
-                    className="h-full bg-green-600 absolute"
-                    style={{ width: `${percentageB}%`, left: `${percentageA}%` }}
-                ></div>
-            </div>
-
-            <div className="flex justify-between mt-2 text-sm text-gray-400">
-                <span>Option A: {votes.optionA} ({percentageA.toFixed(0)}%)</span>
-                <span>Option B: {votes.optionB} ({percentageB.toFixed(0)}%)</span>
-            </div>
-        </div>
-    )
-}
