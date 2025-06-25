@@ -13,8 +13,15 @@ const Publish = () => {
     useEffect(() => {
 
         //Joining the room
-        const roomId=param.roomId
-       console.log(roomId)
+        const roomId = param.roomId
+        console.log(roomId)
+        socket.emit("join-room", roomId)
+
+        //Joined messasges
+        socket.on("join-message",(message)=>{
+        toast.success(message.count)
+        console.log(message)
+        })
 
         //Handling when the sessions ends
         const handleTimerEnd = () => {
@@ -41,13 +48,6 @@ const Publish = () => {
             <main className='h-screen w-full bg-gray-100 flex items-center justify-center flex-col gap-5'>
 
                 <button onClick={() => navigate("/")} className='absolute text-white h-[50px] w-[120px] top-6 left-6  bg-green-600 hover:bg-green-700 rounded-xl transition'>Go back</button>
-                {/* <div>
-                    <p>
-                        {
-                            window.location.href
-                        }
-                    </p>
-                </div> */}
 
                 {/* <VotingBox /> */}
                 <div className="max-w-md mx-auto p-6 bg-gray-900 rounded-2xl text-white shadow-xl">
@@ -65,7 +65,11 @@ const Publish = () => {
 
                 <button onClick={handleCopy}
                     className='h-[40px] w-[120px] bg-green-500 text-white rounded-xl'
-                >Copy Link</button>
+                >
+                    Copy Link
+                </button>
+                {/* <progress value={0.4} />
+                <progress value={1} /> */}
                 <ToastContainer />
             </main>
         </>
