@@ -39,7 +39,7 @@ const App = () => {
 
   //Handing the Form submission
   const handlePublish = (data) => {
-    console.log(data)
+    // console.log(data)
     const { title,duration } = data
     socket.emit("create", { title, options: [data.option1, data.option2] ,duration })
   }

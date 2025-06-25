@@ -18,15 +18,63 @@ const socket = new Server(server, {
     }
 })
 
-const roomTimers = {};
+let rooms = {}
 
 //******Socket handling*******
 socket.on("connection", (client) => {
     console.log(`new connection ${client.id}`)
 
-    //when user want to publish statement
-    client.on("create", ({ title, options, duration }) => {
+    //********Getting the votes****** */
+    client.on("v1", (roomId) => {
+        //checking weather room exist or not
+        console.log("voting from",roomId)
+
+        if (rooms[roomId]) {
+            rooms[roomId].votes.v1 = rooms[roomId].votes.v1 + 1
+            socket.to(roomId).emit("vote",rooms[roomId])
+        }
+
+    })
+
+    client.on("v2", (roomId) => {
+        //checking weather room exist or not
+        console.log("voting from",roomId)
+
+        if (rooms[roomId]) {
+            rooms[roomId].votes.v2 = rooms[roomId].votes.v2 + 1
+            socket.to(roomId).emit("vote",rooms[roomId])
+        }
+
+    })
+
+    //*************Joining the socket room for voting
+    client.on("join-room", (roomId) => {
+
+        //checking weather room exist or not
+        if (rooms[roomId]) {
+            rooms[roomId].count = rooms[roomId].count + 1
+        }
+
+        client.join(roomId)
+        client.emit("join-message", rooms[roomId])
+        console.log(`joining ${roomId}`)
+    })
+
+    //*************when user want to publish statement
+    client.on("create", (data) => {
+
+        const { title, duration, options } = data
         const uniqueId = uuidv4();
+
+        //saving the rooms counts
+        rooms[uniqueId] = {
+            count: 0,
+            data,
+            votes: {
+                v1: 0,
+                v2: 0
+            }
+        }
 
         //creating or joining the unique Room
         client.join(uniqueId)
@@ -34,13 +82,13 @@ socket.on("connection", (client) => {
 
 
         //Deleting the room
-        setTimeout(()=>{
-         socket.to(uniqueId).emit("timer-ended")
-          //Deleting logic for socket room
+        setTimeout(() => {
+            // socket.to(uniqueId).emit("timer-ended")
+            //Deleting logic for socket room
 
 
 
-        },parseInt(duration) * 3000 )
+        }, parseInt(duration) * 3000)
 
         //Boardcasting the unique id
         socket.emit("roomId", uniqueId)
