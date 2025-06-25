@@ -12,14 +12,7 @@ const App = () => {
     handleSubmit,
     register,
     formState: { errors }
-  } = useForm({
-    defaultValues: {
-      title: "who is GOAT?",
-      option1: "Ronaldo",
-      option2: "Pessi",
-      duration:1
-    }
-  })
+  } = useForm()
 
   //Handling the Socket Connection
   useEffect(() => {
@@ -91,7 +84,7 @@ const App = () => {
       {errors.option2 && <p className="text-red-500 text-sm">{errors.option2.message}</p>}
 
       {/* Duration */}
-      <input
+      {/* <input
         type="number"
         placeholder="Duration (in hours)"
         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
@@ -99,7 +92,7 @@ const App = () => {
           required: "Duration is required",
         })}
       />
-      {errors.duration && <p className="text-red-500 text-sm">{errors.duration.message}</p>}
+      {errors.duration && <p className="text-red-500 text-sm">{errors.duration.message}</p>} */}
 
       <button
         type="submit"

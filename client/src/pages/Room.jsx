@@ -94,44 +94,75 @@ const Publish = () => {
 
     return (
         <>
-            <main className='h-screen w-full bg-slate-900 flex items-center justify-center flex-col gap-5'>
+            <main className="min-h-screen w-full bg-slate-900 flex items-center justify-center flex-col gap-6 px-4 py-8">
 
-                {/* <button onClick={() => navigate("/")}
-                    className='absolute text-white h-[50px] w-[120px] top-6 left-6
-                   bg-green-600 hover:bg-green-700 rounded-xl
-                    transition'>Go back
-                </button> */}
+                <p className='text-slate-300'>Note : Your can vote infinite times</p>
+                <p className='text-slate-300'>current voters {detail && detail.count}</p>
+            
+                {/* Voting Box */}
+                <div className="w-full max-w-xl bg-slate-800 text-white p-6 rounded-xl shadow-md flex flex-col items-center gap-5">
+                    <h2 className="text-2xl font-bold text-center text-slate-100">
+                        {detail && detail.data.title}
+                    </h2>
 
-
-                {/* <VotingBox /> */}
-                <div className="p-5 min-h-[200px] w-[80%] white rounded-md text-white shadow-xs bg-slate-800 flex flex-col justify-center items-center gap-5">
-                    <h2 className="text-2xl font-bold mb-6 text-center text-slate-100">{detail && detail.data.title}</h2>
-
-                    <div className="flex w-full gap-5">
-                        <button onClick={() => handleVote("v1")} className="flex-1 py-3 bg-blue-500 hover:bg-blue-400 rounded-md transition">
+                    {/* Vote Buttons */}
+                    <div className="flex flex-col sm:flex-row w-full gap-4">
+                        <button
+                            onClick={() => handleVote("v1")}
+                            className="flex-1 py-3 bg-blue-500 hover:bg-blue-400 rounded-md transition"
+                        >
                             {detail && detail.data.options[0]}
                         </button>
-                        <button onClick={() => handleVote("v2")} className="flex-1 py-3 bg-pink-500 hover:bg-pink-400 rounded-md transition">
+                        <button
+                            onClick={() => handleVote("v2")}
+                            className="flex-1 py-3 bg-pink-500 hover:bg-pink-400 rounded-md transition"
+                        >
                             {detail && detail.data.options[1]}
                         </button>
                     </div>
 
-
-                    {/* Votes */}
-                    <div className='flex w-full h-[40px] rounded-3xl overflow-hidden'>
-                        <span style={{ width: `${progress.p1}%`, backgroundColor: `${progress.p1 > progress.p2 ? "#10B981" : "#6B7280"}` }} className={` h-full flex items-center justify-center`}>{detail && detail.votes.v1}</span>
-                        <span style={{ width: `${progress.p2}%`, backgroundColor: `${progress.p1 > progress.p2 ? "#6B7280" : "#10B981"}` }} className={`  h-full flex items-center justify-center`}>{detail && detail.votes.v2}</span>
+                    {/* Vote Progress */}
+                    <div className="flex w-full h-10 rounded-full overflow-hidden">
+                        <span
+                            style={{
+                                width: `${progress.p1}%`,
+                                backgroundColor: progress.p1 > progress.p2 ? "#10B981" : "#6B7280",
+                            }}
+                            className="h-full flex items-center justify-center text-sm"
+                        >
+                            {detail && detail.votes.v1}
+                        </span>
+                        <span
+                            style={{
+                                width: `${progress.p2}%`,
+                                backgroundColor: progress.p2 > progress.p1 ? "#10B981" : "#6B7280",
+                            }}
+                            className="h-full flex items-center justify-center text-sm"
+                        >
+                            {detail && detail.votes.v2}
+                        </span>
                     </div>
-
                 </div>
 
-                <button onClick={handleCopy}
-                    className='h-[40px] w-[120px] bg-green-500 text-white rounded-md'
+                {/* Copy Link Button */}
+                <button
+                    onClick={handleCopy}
+                    className="w-40 h-10 bg-green-500 text-white rounded-md hover:bg-green-600 transition"
                 >
-                    Copy Link
+                    Copy link
                 </button>
+
+                {/* Publish your own */}
+                <button
+                    onClick={() => navigate("/")}
+                    className=" w-[160px] h-[40px] bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-md transition duration-300"
+                >
+                    Publish your own
+                </button>
+
                 <ToastContainer />
             </main>
+
         </>
     )
 }
