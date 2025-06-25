@@ -96,7 +96,7 @@ const Publish = () => {
         <>
             <main className="min-h-screen w-full bg-slate-900 flex items-center justify-center flex-col gap-6 px-4 py-8">
 
-                <p className='text-slate-300'>Note : Your can vote infinite times</p>
+                <p className='text-slate-300'>Note : You can vote infinite times</p>
                 <p className='text-slate-300'>current voters {detail && detail.count}</p>
             
                 {/* Voting Box */}
