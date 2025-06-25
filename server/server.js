@@ -5,6 +5,8 @@ const cors = require("cors")
 const http = require("http")
 const { v4: uuidv4 } = require('uuid');
 const { Server } = require("socket.io");
+import shortid from 'shortid';
+
 
 //Middlewares
 app.use(cors())
@@ -64,7 +66,8 @@ socket.on("connection", (client) => {
     client.on("create", (data) => {
 
         const { title, duration, options } = data
-        const uniqueId = uuidv4();
+        const uniqueId = shortid.generate();
+
 
         //saving the rooms counts
         rooms[uniqueId] = {
