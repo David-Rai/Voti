@@ -47,57 +47,70 @@ const App = () => {
   return (
 
     <>
-      <main className='h-screen w-full bg-slate-100 flex items-center justify-center flex-col'>
-        <h1 className='m-4 text-2xl'>Publish new statement</h1>
-        <div className="bg-white min-h-[250px] w-[80%] rounded-lg py-4">
+    <main className="min-h-screen w-full bg-slate-100 flex items-center justify-center px-4">
+  <div className="bg-white w-full max-w-xl rounded-xl shadow-lg p-6">
+    <h1 className="text-2xl font-bold text-slate-800 text-center mb-6">
+      Publish New Statement
+    </h1>
 
-          <form onSubmit={handleSubmit(handlePublish)} className='h-full w-full flex items-center justify-center gap-4 flex-col'>
-            {/* Title */}
-            <input type="text" name="title" placeholder='Title' className='input'
-              {...register("title", {
-                required: "Title is required"
-              })}
-            />
-            {
-              errors.title && <p>{errors.title.message}</p>
-            }
-            <input type="text" name="option1" placeholder='option 1' className='input'
-              {...register("option1", {
-                required: "option is required"
-              })}
+    <form
+      onSubmit={handleSubmit(handlePublish)}
+      className="flex flex-col gap-4"
+    >
+      {/* Title */}
+      <input
+        type="text"
+        placeholder="Title"
+        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
+        {...register("title", {
+          required: "Title is required",
+        })}
+      />
+      {errors.title && <p className="text-red-500 text-sm">{errors.title.message}</p>}
 
-            />
-            {
-              errors.option1 && <p>{errors.option1.message}</p>
-            }
-            <input type="text" name="option2" placeholder='option 2' className='input'
-              {...register("option2", {
-                required: "option is required"
-              })}
+      {/* Option 1 */}
+      <input
+        type="text"
+        placeholder="Option 1"
+        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
+        {...register("option1", {
+          required: "Option 1 is required",
+        })}
+      />
+      {errors.option1 && <p className="text-red-500 text-sm">{errors.option1.message}</p>}
 
-            />
-            {
-              errors.option2 && <p>{errors.option2.message}</p>
-            }
+      {/* Option 2 */}
+      <input
+        type="text"
+        placeholder="Option 2"
+        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
+        {...register("option2", {
+          required: "Option 2 is required",
+        })}
+      />
+      {errors.option2 && <p className="text-red-500 text-sm">{errors.option2.message}</p>}
 
-            <input type="number" name="duration" placeholder='for how much hours' className='input'
-              {...register("duration", {
-                required: "duration is required"
-              })}
+      {/* Duration */}
+      <input
+        type="number"
+        placeholder="Duration (in hours)"
+        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
+        {...register("duration", {
+          required: "Duration is required",
+        })}
+      />
+      {errors.duration && <p className="text-red-500 text-sm">{errors.duration.message}</p>}
 
-            />
-            {
-              errors.duratio  && <p>{errors.duration.message}</p>
-            }
+      <button
+        type="submit"
+        className="mt-4 bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-md transition duration-300"
+      >
+        Publish
+      </button>
+    </form>
+  </div>
+</main>
 
-            <button
-              type='submit'
-              className='h-[40px] w-[120px] bg-purple-500 rounded-md text-white'>
-              Publish
-            </button>
-          </form>
-        </div>
-      </main>
     </>
   )
 }
